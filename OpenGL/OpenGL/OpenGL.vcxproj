@@ -172,17 +172,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad\src\glad.c" />
-    <ClCompile Include="LinkedList_Impl.hpp" />
     <ClCompile Include="OpenGL.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drawer.h" />
-    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Mapper.h" />
-    <ClInclude Include="Node.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
-    <ClInclude Include="Test.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="VertexArrayObject.h" />
   </ItemGroup>

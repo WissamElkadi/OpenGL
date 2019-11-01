@@ -98,7 +98,7 @@ int main()
 		shaderProgram->use();
 		vertexArrayObject->bind();
 		Render::GL::Drawer::drawElements(DrawingPrimitive::TRIANGLES, Type::UNSIGNED_INT, indices.size());
-
+		vertexArrayObject->unbind();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
