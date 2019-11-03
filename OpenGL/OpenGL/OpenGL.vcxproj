@@ -179,8 +179,6 @@
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="FileReader.h" />
-    <ClInclude Include="LinkedList.h" />
-    <ClInclude Include="lis.h" />
     <ClInclude Include="Mapper.h" />
     <ClInclude Include="RenderPipeline.h" />
     <ClInclude Include="Shader.h" />

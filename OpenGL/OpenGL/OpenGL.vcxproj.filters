@@ -44,12 +44,6 @@
     <ClInclude Include="..\..\..\Problem Solving\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LinkedList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lis.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RenderPipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>

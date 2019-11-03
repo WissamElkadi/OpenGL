@@ -39,7 +39,7 @@ namespace Render
 			}
 
 			template<typename T>
-			void updateValue(int _programId, T* _value)
+			void updateValue(int _programId, const T* _value)
 			{
 				int uniformLocation = glGetUniformLocation(_programId, mName.c_str());
 
@@ -70,37 +70,37 @@ namespace Render
 					glUniform4i(uniformLocation, _value[0], _value[1], _value[2], _value[3]);
 					break;
 				case UniformType::VEC_FLOAT_1:
-					glUniform1fv(uniformLocation, 1, value);
+					glUniform1fv(uniformLocation, 1, _value);
 					break;
 				case UniformType::VEC_FLOAT_2:
-					glUniform2fv(uniformLocation, 1, value);
+					glUniform2fv(uniformLocation, 1, _value);
 					break;
 				case UniformType::VEC_FLOAT_3:
-					glUniform3fv(uniformLocation, 1, value);
+					glUniform3fv(uniformLocation, 1, _value);
 					break;
 				case UniformType::VEC_FLOAT_4:
-					glUniform4fv(uniformLocation, 1, value);
+					glUniform4fv(uniformLocation, 1, _value);
 					break;
-				case UniformType::VEC_INT_1:
-					glUniform1iv(uniformLocation, 1, value);
+				/*case UniformType::VEC_INT_1:
+					glUniform1iv(uniformLocation, 1, _value);
 					break;
 				case UniformType::VEC_INT_2:
-					glUniform2iv(uniformLocation, 1, value);
+					glUniform2iv(uniformLocation, 1, _value);
 					break;
 				case UniformType::VEC_INT_3:
-					glUniform3iv(uniformLocation, 1, value);
+					glUniform3iv(uniformLocation, 1, _value);
 					break;
 				case UniformType::VEC_INT_4:
-					glUniform4iv(uniformLocation, 1, value);
-					break;
+					glUniform4iv(uniformLocation, 1, _value);
+					break;*/
 				case UniformType::MAT_FLOAT_2X2:
-					glUniformMatrix2fv(uniformLocation, 1, GL_FALSE, value);
+					glUniformMatrix2fv(uniformLocation, 1, GL_FALSE, _value);
 					break;
 				case UniformType::MAT_FLOAT_3X3:
-					glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, value);
+					glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, _value);
 					break;
 				case UniformType::MAT_FLOAT_4X4:
-					glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, value);
+					glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, _value);
 					break;
 				default:
 					break;
