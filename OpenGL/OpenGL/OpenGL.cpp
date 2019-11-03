@@ -10,8 +10,11 @@
 
 #include "Shader.h"
 #include "ShaderProgram.h"
-#include "VertexArrayObject.h"
+#include "VertexBuffer.h"
 #include "Drawer.h"
+#include "Uniform.h"
+#include "UniformBuffer.h"
+
 
 const char *vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
@@ -72,33 +75,42 @@ int main()
 		return -1;
 	}
 
-	glViewport(0, 0, 800, 600);
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
-	std::unique_ptr<Render::GL::Shader> vertexShader = std::make_unique<Render::GL::Shader>(vertexShaderSource, ShaderType::VERTEX);
-	std::unique_ptr<Render::GL::Shader> fragmentShader = std::make_unique<Render::GL::Shader>(fragmentShaderSource, ShaderType::FRAGMENT);
+	std::unique_ptr<Render::GL::Shader> vertexShader = std::make_unique<Render::GL::Shader>("C:/Users/mohammew/Documents/Wissam/OpenGL/OpenGL/OpenGL/res/triangle.ver.glsl", ShaderType::VERTEX);
+	std::unique_ptr<Render::GL::Shader> fragmentShader = std::make_unique<Render::GL::Shader>("C:/Users/mohammew/Documents/Wissam/OpenGL/OpenGL/OpenGL/res/triangle.frag.glsl", ShaderType::FRAGMENT);
 
-	std::unique_ptr<Render::GL::ShaderProgram> shaderProgram = std::make_unique<Render::GL::ShaderProgram>(std::move(vertexShader), std::move(fragmentShader));
+	std::unique_ptr<Render::GL::RenderPipeline> renderPipeline = std::make_unique<Render::GL::RenderPipeline>();
 
-	std::unique_ptr<Render::GL::VertexArrayObject> vertexArrayObject = std::make_unique<Render::GL::VertexArrayObject>(vertices, indices);
+	renderPipeline->vertexShader = std::move(vertexShader);
+	renderPipeline->fragmentShader = std::move(fragmentShader);
+
+	std::unique_ptr<Render::GL::VertexBuffer> vertexBuffer = std::make_unique<Render::GL::VertexBuffer>(vertices, indices);
+
+	std::vector<Render::GL::UniformBuffer*> uniformBuffers;
+	std::vector<float> color = { 0.f, 1.0f, 0.0f, 1.0f };
+	std::unique_ptr<Render::GL::UniformBuffer> colorUniformBuffer = std::make_unique<Render::GL::Uniform<float>>("ourColor", UniformType::FLOAT_4, color.data());
+    uniformBuffers.push_back(colorUniformBuffer.get());
+
+	std::unique_ptr<Render::GL::Drawer> triangleDrawer = std::make_unique<Render::GL::Drawer>();
+	triangleDrawer->setViewPort(0, 0, 800, 600);
+	triangleDrawer->setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	triangleDrawer->setVertexBuffer(std::move(vertexBuffer));
+	triangleDrawer->setRenderPipeline(std::move(renderPipeline));
+	triangleDrawer->setUniformBuffers(uniformBuffers);
+
+	std::vector<float> red = { 1.0f, 0.0f, 0.0f, 1.0f };
 
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
 
-		// rendering commands here
-
-
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
 		// draw our first triangle
-		shaderProgram->use();
-		vertexArrayObject->bind();
-		Render::GL::Drawer::drawElements(DrawingPrimitive::TRIANGLES, Type::UNSIGNED_INT, indices.size());
-		vertexArrayObject->unbind();
+		triangleDrawer->drawElements(DrawingPrimitive::TRIANGLES, Type::UNSIGNED_INT, indices.size());
+		dynamic_cast<Render::GL::Uniform<float>*>(colorUniformBuffer.get())->updateValue(red.data());
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}

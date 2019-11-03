@@ -175,12 +175,24 @@
     <ClCompile Include="OpenGL.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Problem Solving\Node.h" />
     <ClInclude Include="Drawer.h" />
+    <ClInclude Include="Device.h" />
+    <ClInclude Include="FileReader.h" />
+    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="lis.h" />
     <ClInclude Include="Mapper.h" />
+    <ClInclude Include="RenderPipeline.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Types.h" />
-    <ClInclude Include="VertexArrayObject.h" />
+    <ClInclude Include="Uniform.h" />
+    <ClInclude Include="UniformBuffer.h" />
+    <ClInclude Include="VertexBuffer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\triangle.frag.glsl" />
+    <None Include="res\triangle.ver.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

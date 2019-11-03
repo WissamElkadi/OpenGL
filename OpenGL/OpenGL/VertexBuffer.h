@@ -8,13 +8,13 @@ namespace Render
 {
 	namespace GL
 	{
-		class VertexArrayObject
+		class VertexBuffer
 		{
 		private:
 			unsigned int mVBO, mVAO, mEBO;
 
 		public:
-			VertexArrayObject(const std::vector<float>& _vertices, const std::vector<unsigned int>& _indices)
+			VertexBuffer(const std::vector<float>& _vertices, const std::vector<unsigned int>& _indices)
 			{
 				glGenVertexArrays(1, &mVAO);
 				glGenBuffers(1, &mVBO);

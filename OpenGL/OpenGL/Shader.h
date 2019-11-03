@@ -6,6 +6,7 @@
 
 #include "Types.h"
 #include "Mapper.h"
+#include "FileReader.h"
 
 namespace Render
 {
@@ -18,10 +19,13 @@ namespace Render
 			int          mShaderId;
 
 		public:
-			Shader(const char* _shaderSource, ShaderType _shaderType)
+			Shader(const char* _shaderPath, ShaderType _shaderType)
 			{
+				std::string shaderSourceString = FileReader::getContent(_shaderPath);
+				const char* shaderSource = shaderSourceString.c_str();
+
 				mShaderId = glCreateShader(ShaderTypeMapper.at(_shaderType));
-				glShaderSource(mShaderId, 1, &_shaderSource, NULL);
+				glShaderSource(mShaderId, 1, &shaderSource, NULL);
 				glCompileShader(mShaderId);
 
 				// check for shader compile errors
