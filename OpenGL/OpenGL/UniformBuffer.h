@@ -4,13 +4,10 @@
 
 namespace Render
 {
-	namespace GL
+	class UniformBuffer
 	{
-		class UniformBuffer
-		{
-		public:
-			virtual UniformType getUniformType() = 0;
-			virtual void update(int _shaderProgramId) = 0;
-		};
-	}
+	public:
+		virtual MemoryFormat getMemoryFormat() = 0;
+		virtual void update(int _shaderProgramId) = 0;
+	};
 }

@@ -10,50 +10,46 @@
 
 namespace Render
 {
-	namespace GL
+	class Shader
 	{
+	protected:
+		int          mShaderId;
 
-		class Shader
+	public:
+		Shader(const char* _shaderPath, ShaderType _shaderType)
 		{
-		protected:
-			int          mShaderId;
+			std::string shaderSourceString = FileReader::getContent(_shaderPath);
+			const char* shaderSource = shaderSourceString.c_str();
 
-		public:
-			Shader(const char* _shaderPath, ShaderType _shaderType)
+			mShaderId = glCreateShader(ShaderTypeMapper.at(_shaderType));
+			glShaderSource(mShaderId, 1, &shaderSource, NULL);
+			glCompileShader(mShaderId);
+
+			// check for shader compile errors
+			int success;
+			char infoLog[512];
+			glGetShaderiv(mShaderId, GL_COMPILE_STATUS, &success);
+			if (!success)
 			{
-				std::string shaderSourceString = FileReader::getContent(_shaderPath);
-				const char* shaderSource = shaderSourceString.c_str();
-
-				mShaderId = glCreateShader(ShaderTypeMapper.at(_shaderType));
-				glShaderSource(mShaderId, 1, &shaderSource, NULL);
-				glCompileShader(mShaderId);
-
-				// check for shader compile errors
-				int success;
-				char infoLog[512];
-				glGetShaderiv(mShaderId, GL_COMPILE_STATUS, &success);
-				if (!success)
-				{
-					glGetShaderInfoLog(mShaderId, 512, NULL, infoLog);
-					std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
-				}
+				glGetShaderInfoLog(mShaderId, 512, NULL, infoLog);
+				std::cout << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
 			}
+		}
 
-			int getShaderId() const
-			{
-				return mShaderId;
-			}
+		int getShaderId() const
+		{
+			return mShaderId;
+		}
 
-			void deleteShader()
-			{
-				glDeleteShader(mShaderId);
-			}
+		void deleteShader()
+		{
+			glDeleteShader(mShaderId);
+		}
 
-			~Shader()
-			{
-				glDeleteShader(mShaderId);
-			}
+		~Shader()
+		{
+			glDeleteShader(mShaderId);
+		}
 
-		};
-	}
+	};
 }

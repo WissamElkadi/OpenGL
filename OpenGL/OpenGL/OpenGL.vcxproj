@@ -72,19 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\..\third-party\glad\include;$(ProjectDir)..\..\third-party\glfw\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\third-party\glad\include;$(ProjectDir)..\..\third-party\glfw\include;$(ProjectDir)..\..\third-party\stb_image;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\..\third-party\glad\include;$(ProjectDir)..\..\third-party\glfw\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\third-party\glad\include;$(ProjectDir)..\..\third-party\glfw\include;$(ProjectDir)..\..\third-party\stb_image;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\..\third-party\glad\include;$(ProjectDir)..\..\third-party\glfw\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\third-party\glad\include;$(ProjectDir)..\..\third-party\glfw\include;$(ProjectDir)..\..\third-party\stb_image;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\..\third-party\glad\include;$(ProjectDir)..\..\third-party\glfw\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\third-party\glad\include;$(ProjectDir)..\..\third-party\glfw\include;$(ProjectDir)..\..\third-party\stb_image;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -173,20 +173,27 @@
   <ItemGroup>
     <ClCompile Include="glad\src\glad.c" />
     <ClCompile Include="OpenGL.cpp" />
+    <ClCompile Include="stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Problem Solving\Node.h" />
+    <ClInclude Include="Buffer.h" />
+    <ClInclude Include="DataStructure.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="Mapper.h" />
-    <ClInclude Include="RenderPipeline.h" />
+    <ClInclude Include="RenderPieplineDescriptor.h" />
+    <ClInclude Include="RenderPipelineState.h" />
+    <ClInclude Include="Sampler.h" />
+    <ClInclude Include="SamplerDescriptor.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureDescriptor.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Uniform.h" />
     <ClInclude Include="UniformBuffer.h" />
     <ClInclude Include="VertexBuffer.h" />
+    <ClInclude Include="VertexDescriptor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\triangle.frag.glsl" />

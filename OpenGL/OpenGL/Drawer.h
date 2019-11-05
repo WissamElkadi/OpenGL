@@ -3,69 +3,74 @@
 #include "Types.h"
 #include "Mapper.h"
 #include "VertexBuffer.h"
-#include "ShaderProgram.h"
-#include "RenderPipeline.h"
+#include "RenderPipelineState.h"
 #include "UniformBuffer.h"
+#include "VertexDescriptor.h"
+#include "Buffer.h"
+#include "Sampler.h"
+#include "Texture.h"
 
 namespace Render
 {
-	namespace GL
+	class Drawer
 	{
-		class Drawer
+	private:
+		RenderPipelineState*          mRenderPipelineState;
+		VertexBuffer*                 mVertexBuffer;
+		std::vector<UniformBuffer*>   mUniformBuffers;
+		Buffer*                       mIndexBuffer;
+
+	public:
+		void drawElements(DrawingPrimitive _drawingPrimitive, Type _type, size_t count)
 		{
-		private:
-			std::unique_ptr<RenderPipeline>                   mRenderPipeline;
-			std::unique_ptr<VertexBuffer>                     mVertexBuffer;
-			std::vector<UniformBuffer*>                       mUniformBuffers;
+			mRenderPipelineState->use();
+			mVertexBuffer->bind();
 
-		public:
-
-			void drawElements(DrawingPrimitive _drawingPrimitive, Type _type, size_t count)
+			for (const auto& uniformBuffer : mUniformBuffers)
 			{
-				mRenderPipeline->use();
-				mVertexBuffer->bind();
-
-				for (const auto& uniformBuffer : mUniformBuffers)
-				{
-					uniformBuffer->update(mRenderPipeline->getId());
-				}
-
-	        	glDrawElements(DrawingPrimitiveMapper.at(_drawingPrimitive), count, TypeMapper.at(_type), 0);
-
-				mVertexBuffer->unbind();
-				mRenderPipeline->unuse();
+				uniformBuffer->update(mRenderPipelineState->getId());
 			}
 
-			void draw(DrawingPrimitive _drawingPrimitive, int count)
-			{
-				glDrawArrays(DrawingPrimitiveMapper.at(_drawingPrimitive), 0, count);
-			}
+			glDrawElements(DrawingPrimitiveMapper.at(_drawingPrimitive), count, TypeMapper.at(_type), 0);
 
-			void setRenderPipeline(std::unique_ptr<RenderPipeline> _renderPipeline)
-			{
-				mRenderPipeline = std::move(_renderPipeline);
-			}
+			//mVertexBuffer->unbind();
+			//mRenderPipelineState->unuse();
+		}
 
-			void setVertexBuffer(std::unique_ptr<VertexBuffer> _vertexArray)
-			{
-				mVertexBuffer = std::move(_vertexArray);
-			}
+		void draw(DrawingPrimitive _drawingPrimitive, int count)
+		{
+			glDrawArrays(DrawingPrimitiveMapper.at(_drawingPrimitive), 0, count);
+		}
 
-			void setUniformBuffers(std::vector<UniformBuffer*>& _uniformBuffers)
-			{
-				mUniformBuffers = _uniformBuffers;
-			}
+		void setRenderPipelineState(RenderPipelineState* _RenderPipelineState)
+		{
+			mRenderPipelineState = _RenderPipelineState;
+			mRenderPipelineState->link();
+		}
 
-			void setViewPort(int _xOffset, int _yOffset, int _width, int _height)
-			{
-				glViewport(_xOffset, _yOffset, _width, _height);
-			}
+		void setUniformBuffers(std::vector<UniformBuffer*>& _uniformBuffers)
+		{
+			mUniformBuffers = _uniformBuffers;
+		}
 
-			void setClearColor(float _r, float _g, float _b, float _a)
-			{
-				glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-				glClear(GL_COLOR_BUFFER_BIT);
-			}
-		};
-	}
+		void setViewPort(int _xOffset, int _yOffset, int _width, int _height)
+		{
+			glViewport(_xOffset, _yOffset, _width, _height);
+		}
+
+		void setClearColor(float _r, float _g, float _b, float _a)
+		{
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
+		}
+
+		void setVertexBuffer(VertexBuffer* _vertexBuffer)
+		{
+			mVertexBuffer = _vertexBuffer;
+		}
+
+		void setIndexBuffer(Buffer* _indexBuffer)
+		{
+		}
+	};
 }
